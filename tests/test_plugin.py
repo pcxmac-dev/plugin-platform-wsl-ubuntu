@@ -49,3 +49,9 @@ def test_the_plugin_names_its_distribution_and_offers_its_engine(monkeypatch):
     assert inst.name == "wsl-ubuntu" and inst.command == f"wsl -d {p.distribution_name} --exec docker" and inst.translate("C:\\\\x") == "/mnt/c/x"
     assert p.run("echo", "hi") == "echo hi\n"
     assert WslUbuntuPlugin(wsl=Wsl(runner=FakeWsl())).instances() == ()
+
+
+def test_docker_comes_from_dockers_own_repository_for_the_distribution():
+    script = MACHINE.install_script()
+    assert MACHINE.docker_repository == "https://download.docker.com/linux/ubuntu" and "{repository}" not in script
+    assert "curl -fsSL https://download.docker.com/linux/ubuntu/gpg " in script and "] https://download.docker.com/linux/ubuntu ${UBUNTU_CODENAME" in script

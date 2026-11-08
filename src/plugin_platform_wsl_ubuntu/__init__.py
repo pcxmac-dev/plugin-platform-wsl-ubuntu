@@ -14,7 +14,7 @@ import os
 
 from liminal_libs.machines.wsl import WslDistribution, WslError
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 
 def _read_text(url: str) -> str:
@@ -32,6 +32,7 @@ class WslUbuntuPlugin(WslDistribution):
     order = 700
     distribution = "Ubuntu"
     family = "apt"
+    docker_repository = "https://download.docker.com/linux/ubuntu"  # Docker's own, as its documentation gives it
     install_name = "Ubuntu"
     DISTRIBUTION_VAR = "WSL_UBUNTU_DISTRIBUTION"
     USER_VAR = "WSL_UBUNTU_USER"
