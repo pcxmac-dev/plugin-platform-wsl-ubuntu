@@ -1,0 +1,40 @@
+"""WSL Ubuntu for Liminal (the user, 2026-11-07: "the platform is the interface for the software/hardware
+which facilitates the liminal framework"; "the scope of the plugin is setting up WSL/Ubuntu and supporting
+docker for the platform"; "then create a gentoo and fedora plugin as well, same scope/function"): Ubuntu
+in WSL 2 on this Windows PC, set up by the plugin (WSL itself, the distribution, systemd and the default
+user, Docker inside, the engine started, the user in the docker group), and its engine offered to the
+framework as the Docker instance `wsl-ubuntu` (liminal_libs.docker.instances). Everything is the library's
+WslDistribution (liminal_libs.machines.wsl); this module says which distribution.
+
+    python -m plugin_platform_wsl_ubuntu status | setup [STEP ...] | run -- COMMAND | instances
+"""
+from __future__ import annotations
+
+import os
+
+from liminal_libs.machines.wsl import WslDistribution, WslError
+
+__version__ = "0.1.0"
+
+
+def _read_text(url: str) -> str:
+    import urllib.request
+
+    with urllib.request.urlopen(url, timeout=60) as r:  # noqa: S310 - the plugin's own url
+        return r.read().decode("utf-8", "replace")
+
+
+class WslUbuntuPlugin(WslDistribution):
+    name = "wsl-ubuntu"
+    title = "WSL Ubuntu"
+    about = "Ubuntu in WSL 2 on this Windows PC, with Docker inside: the Linux the platform's containers run in"
+    api = "2.1"
+    order = 700
+    distribution = "Ubuntu"
+    family = "apt"
+    install_name = "Ubuntu"
+    DISTRIBUTION_VAR = "WSL_UBUNTU_DISTRIBUTION"
+    USER_VAR = "WSL_UBUNTU_USER"
+
+
+MACHINE = WslUbuntuPlugin()
