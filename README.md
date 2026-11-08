@@ -19,7 +19,7 @@ A machine plugin of the platform (`liminal_libs.machines.MachinePlugin`, plugin 
   its version, the daemon answering).
 - `setup()`: everything, step by step, each reported: WSL itself (`wsl --install --no-distribution`; Windows
   asks to confirm with elevation and may want a restart), `wsl --update`, WSL 2 as the default, the
-  distribution (`wsl --install -d Ubuntu --no-launch` from Microsoft's list; Docker from Docker's own apt repository (docker-ce, docker-ce-cli, containerd.io, buildx, compose).), `/etc/wsl.conf` with systemd on and the default user `liminal`
+  distribution (`wsl --install Ubuntu --name Liminal-Ubuntu --location <data folder> --no-launch` from Microsoft's list; Docker from Docker's own apt repository (docker-ce, docker-ce-cli, containerd.io, buildx, compose).), `/etc/wsl.conf` with systemd on and the default user `liminal`
   (WSL_UBUNTU_USER) made when absent, Docker installed, the engine started and enabled (systemd, else
   OpenRC, else `service`), the user in the docker group. Everything inside runs as root through `wsl -u
   root`, so no password is asked. A step can be run alone: `setup docker`.
@@ -28,7 +28,10 @@ A machine plugin of the platform (`liminal_libs.machines.MachinePlugin`, plugin 
   Windows paths under `/mnt`; a login file's `[server] instance = wsl-ubuntu` runs its mail server there, and
   `liminal_libs.docker.instance("wsl-ubuntu")` gives any app the engine.
 
-Variables: `WSL_UBUNTU_DISTRIBUTION` (the WSL name, `Ubuntu` unless said), `WSL_UBUNTU_USER`.
+Variables: `WSL_UBUNTU_DISTRIBUTION` (the WSL name, `Liminal-Ubuntu` unless said), `WSL_UBUNTU_USER`.
+
+Its distribution is Liminal's own, installed beside the user's distributions and never taking one of them: the plugin
+is valid only with it installed, and the platform disables it until then.
 
 ## From the command line
 

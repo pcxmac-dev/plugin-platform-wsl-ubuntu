@@ -42,13 +42,17 @@ def test_the_plugin_names_its_distribution_and_offers_its_engine(monkeypatch):
     monkeypatch.delenv("WSL_UBUNTU_USER", raising=False)
     assert MACHINE.name == "wsl-ubuntu" and MACHINE.family == "apt" and MACHINE.SYSTEM == "platform" and MACHINE.KIND == "machine"
     assert MACHINE.options == ("WSL_UBUNTU_DISTRIBUTION", "WSL_UBUNTU_USER") and MACHINE.user == "liminal"
-    fake = FakeWsl(distributions=[("Ubuntu", "Running", "2")], docker=True)
+    fake = FakeWsl(distributions=[("Liminal-Ubuntu", "Running", "2")], docker=True)
     p = WslUbuntuPlugin(wsl=Wsl(runner=fake))
     assert p.present() and p.status()["engine"]["installed"] and p.status()["family"] == "apt"
     (inst,) = p.instances()
     assert inst.name == "wsl-ubuntu" and inst.command == f"wsl -d {p.distribution_name} --exec docker" and inst.translate("C:\\\\x") == "/mnt/c/x"
     assert p.run("echo", "hi") == "echo hi\n"
     assert WslUbuntuPlugin(wsl=Wsl(runner=FakeWsl())).instances() == ()
+    assert MACHINE.distribution == "Liminal-Ubuntu" and p.status()["valid"] is True
+    mine = WslUbuntuPlugin(wsl=Wsl(runner=FakeWsl(distributions=[("Ubuntu", "Running", "2")], docker=True)))
+    assert not mine.present() and mine.status()["valid"] is False  # the user's own Ubuntu is not Liminal's
+    assert mine.status()["why"] == "no Liminal install: its setup installs Liminal-Ubuntu"
 
 
 def test_docker_comes_from_dockers_own_repository_for_the_distribution():
