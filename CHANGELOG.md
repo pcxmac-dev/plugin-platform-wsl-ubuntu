@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.5.0 (2026-11-08)
+
+Every Ubuntu install listed, and a selector for them (the user: "for the WSL plugins, they need to list all the
+'operating systems' that are installed under the plugin's regime, like ubuntu shows all ubuntu installs, fedora --
+installs, gentoo -- installs"; "also the ability to uninstall and select which one to terminal in to"; "basically a
+selector for different installs"), all of it liminal-libs 1.36.0's: the page's "Ubuntu installs" table lists every
+Ubuntu distribution installed for this Windows user from WSL's own record (WSL records its flavor (ubuntu) and version, or a name like Ubuntu-22.04), its state, version, WSL, disk and
+whose, none started to look. The one chosen (Liminal-Ubuntu unless another is picked) is the one a terminal opens into,
+as its default user, and the one Uninstall unregisters (`wsl --unregister`: its disk deleted for good), one of yours only
+after a second confirmation. Needs liminal-libs>=1.36.0.
+
 ## 0.4.1 (2026-11-08)
 
 Its icon is Ubuntu's circle of friends, drawn in the library's line (liminal-libs 1.33.0's `ubuntu`; the user: "for the icons, WSL, use the distribution's mascot or icon"). Needs liminal-libs>=1.33.0.
