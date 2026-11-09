@@ -14,7 +14,7 @@ import os
 
 from liminal_libs.machines.wsl import WslDistribution, WslError
 
-__version__ = "0.7.0"
+__version__ = "0.8.0"
 
 
 def _read_text(url: str) -> str:
